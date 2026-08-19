@@ -5,7 +5,7 @@ from django.utils import timezone
 from rest_framework.viewsets import ModelViewSet
 
 from apps.rides.models import Ride, RideEvent
-from apps.rides.serializers import RideSerializer
+from apps.rides.serializers import RideSerializer, RideEventSerializer
 from apps.users.permissions import IsAdmin
 
 
@@ -32,3 +32,10 @@ class RideViewSet(IsAdminModelViewSet):
             .all()
         )
         return queryset
+
+
+class RideEventViewSet(IsAdminModelViewSet):
+    queryset = RideEvent.objects.select_related("id_ride").all()
+    serializer_class = RideEventSerializer
+    lookup_field = "id_ride_event"
+    filterset_fields = ("id_ride",)
