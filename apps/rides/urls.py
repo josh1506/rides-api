@@ -1,8 +1,8 @@
 from rest_framework.routers import DefaultRouter
 
-from apps.users.views import UserViweSet
+from apps.rides.views import RideViewSet
 
 router = DefaultRouter()
-router.register("", UserViweSet, basename="user")
+router.register("", RideViewSet, basename="ride")
 
 urlpatterns = router.urls
