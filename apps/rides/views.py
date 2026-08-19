@@ -4,6 +4,7 @@ from django.db.models import Prefetch
 from django.utils import timezone
 from rest_framework.viewsets import ModelViewSet
 
+from apps.rides.filters import RideFilter
 from apps.rides.models import Ride, RideEvent
 from apps.rides.serializers import RideSerializer, RideEventSerializer
 from apps.users.permissions import IsAdmin
@@ -15,6 +16,7 @@ class IsAdminModelViewSet(ModelViewSet):
 
 class RideViewSet(IsAdminModelViewSet):
     serializer_class = RideSerializer
+    filterset_class = RideFilter
     lookup_field = "id_ride"
 
     def get_queryset(self):
