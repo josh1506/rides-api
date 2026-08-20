@@ -3,10 +3,12 @@ from datetime import timedelta
 from django.db.models import Prefetch
 from django.utils import timezone
 from rest_framework.viewsets import ModelViewSet
+from django_filters.rest_framework import DjangoFilterBackend
 
 from apps.rides.filters import RideFilter
 from apps.rides.models import Ride, RideEvent
 from apps.rides.serializers import RideSerializer, RideEventSerializer
+from apps.rides.ordering import RideOrderingFilter
 from apps.users.permissions import IsAdmin
 
 
@@ -18,6 +20,7 @@ class RideViewSet(IsAdminModelViewSet):
     serializer_class = RideSerializer
     filterset_class = RideFilter
     lookup_field = "id_ride"
+    filter_backends = [DjangoFilterBackend, RideOrderingFilter]
 
     def get_queryset(self):
         time_cutoff = timezone.now() - timedelta(hours=24)
